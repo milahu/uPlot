@@ -14,6 +14,7 @@
 				let factor = opts.factor || 0.75;
 
 				let xMin, xMax, yMin, yMax, xRange, yRange;
+				let rect;
 
 				function clamp(nRange, nMin, nMax, fRange, fMin, fMax) {
 					if (nRange > fRange) {
@@ -34,6 +35,10 @@
 
 				return {
 					hooks: {
+						setSize: u => {
+							let plot = u.root.querySelector(".u-over");
+							rect = plot.getBoundingClientRect()
+						},
 						ready: u => {
 							xMin = u.scales.x.min;
 							xMax = u.scales.x.max;
@@ -44,7 +49,7 @@
 							yRange = yMax - yMin;
 
 							let plot = u.root.querySelector(".u-over");
-							let rect = plot.getBoundingClientRect();
+							rect = plot.getBoundingClientRect();
 
 							// wheel drag pan
 							plot.addEventListener("mousedown", e => {

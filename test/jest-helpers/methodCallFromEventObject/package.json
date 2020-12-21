@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "node generate-interface.js"
+    "build": "node generate-interface-for-serializer.js"
   },
   "devDependencies": {
     "ts-types-parser": "^1.0.3"

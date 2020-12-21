@@ -15,15 +15,21 @@ export async function update_canvas(canvas, ctxEventHandler) {
 
     // clear canvas + keep transform matrix
     canvas.left.ctx.save();
+await tick();
     canvas.left.ctx.setTransform(1, 0, 0, 1, 0, 0);
+await tick();
     canvas.left.ctx.clearRect(
       0, 0, canvas.left.canvas.width, canvas.left.canvas.height);
+await tick();
     canvas.left.ctx.restore();
 
     canvas.right.ctx.save();
+await tick();
     canvas.right.ctx.setTransform(1, 0, 0, 1, 0, 0);
+await tick();
     canvas.right.ctx.clearRect(
       0, 0, canvas.right.canvas.width, canvas.right.canvas.height);
+await tick();
     canvas.right.ctx.restore();
 
 await tick();
@@ -114,6 +120,7 @@ await tick();
           // send event to context
           ctxEventHandler[type](
             canvas.left.ctx, props, transform);
+await tick();
         }
       }
     }
@@ -134,6 +141,7 @@ await tick();
           });
           ctxEventHandler[type](
             canvas.right.ctx, { ...props, path: path2d }, transform);
+await tick();
         }
         else {
           ctxEventHandler[type](

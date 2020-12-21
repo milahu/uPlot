@@ -1,13 +1,20 @@
+// TODO fix writing of actual snapshot?
+
+
+
 // TODO change this to change test
 // and generate actual snapshot with `npm run test`
 const change_test = 1;
 
 
+//throw { uPlot: require.resolve('../') };
 
 const uPlot = require('../');
 
 // generate data
 // run this only once
+// TODO post-process JSON string to reduce line numbers?
+//   -> use full width of 80 columns
 if (0) {
   const fs = require('fs');
   eval(fs.readFileSync(__dirname + '/../demos/lib/randomWalk.js', 'utf8'));
@@ -99,19 +106,27 @@ const canvas_config = {
 // The first time this test is run, Jest creates a snapshot file.
 // run `jest --updateSnapshot` to update
 
-
-
+/*
 test('plot size', () => {
+// HANGS
+throw 'asdf';
+
   expect(u.width).toBe(opts.width);
   expect(u.height).toBe(opts.height);
 });
+*/
+
 
 test('canvas size', () => {
+
+throw 'asdf';
+
   const size = {
     width: canvas.width,
     height: canvas.height
   };
   //console.dir({ size });
+
   expect({ size }).toMatchSnapshot({
     // ignore non-deterministic values
     //createdAt: expect.any(Date),
@@ -145,6 +160,9 @@ ctx.fillRect(30, 30, 250, 250);
   expect({ events, ...canvas_config }).toMatchSnapshot();
 });
 
+
+if (0) {
+
 test('draw calls', () => {
   // successful draw calls submitted to the context
   const drawCalls = ctx.__getDrawCalls();
@@ -174,7 +192,7 @@ test('last path', () => {
   expect({ path, ...canvas_config }).toMatchSnapshot();
 });
 
-
+}
 
 
 /*

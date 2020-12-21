@@ -1,6 +1,8 @@
 
 export function format_canvas_event(event, obj = 'ctx') {
 
+return event;
+
   const show_keys = false;
 
   const { type, props, transform } = event;

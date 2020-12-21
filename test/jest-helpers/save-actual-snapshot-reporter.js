@@ -16,9 +16,23 @@ class SaveActualSnapshotReporter {
       if (testResult.status == 'passed') continue;
       for (let k = 0; k < testResult.failureDetails.length; k++) {
         const failureDetail = testResult.failureDetails[k];
+
+        //const snapshotName = failureDetail.error.message
+        //  .match(/Snapshot name: `([^`]+)`\n/)[1];
+
+        let snapshotName;
         // get snapshot name from error message (dirty)
-        const snapshotName = failureDetail.error.message
-          .match(/Snapshot name: `([^`]+)`\n/)[1];
+        try {
+          snapshotName = failureDetail.error.message
+            .match(/Snapshot name: `([^`]+)`\n/)[1];
+        }
+        catch (error) {
+          //console.dir({ message: failureDetail.error.message, testResult }, { depth: null });
+          console.log('"Snapshot name" not found in error message:');
+          throw failureDetail.error.message;
+          //snapshotName = testResult.title; // or .fullName ?
+        }
+
         const { matcherResult } = failureDetail.error;
         if (matcherResult.pass == true) continue;
         if (matcherResult.name == 'toMatchSnapshot') {

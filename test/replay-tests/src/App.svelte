@@ -68,8 +68,11 @@ function setSnapshotId() {
 
   if (snapshotId == undefined) return;
 
-  canvas.left.data = JSON.parse(expectedResultMap[snapshotId]);
-  canvas.right.data = JSON.parse(actualResultMap[snapshotId]);
+  //canvas.left.data = JSON.parse(expectedResultMap[snapshotId]);
+  //canvas.right.data = JSON.parse(actualResultMap[snapshotId]);
+
+  canvas.left.data.events = expectedResultMap[snapshotId].split('\n');
+  canvas.right.data.events = actualResultMap[snapshotId].split('\n');
 
   canvas.frames.count = Math.max(
     canvas.left.data.events.length,
@@ -78,13 +81,22 @@ function setSnapshotId() {
 
   if (1) {
 
+    // TODO parse width from JS comment in snapshot string
+
+    canvas.left.canvas.width = 300;
+    canvas.left.canvas.height = 150;
+
+    canvas.right.canvas.width = 300;
+    canvas.right.canvas.height = 150;
+
     // sample: 300 x 150
+    /*
     canvas.left.canvas.width = canvas.left.data.canvas.width;
     canvas.left.canvas.height = canvas.left.data.canvas.height;
 
     canvas.right.canvas.width = canvas.right.data.canvas.width;
     canvas.right.canvas.height = canvas.right.data.canvas.height;
-
+    */
   }
   else {
 
@@ -169,7 +181,8 @@ onMount(() => { // html is loaded
 // react to change in canvas.frames.current
 // TODO better? this should be first called after onMount
 // workaround: in update_canvas, check if canvas is defined
-$: canvas.frames.current, update_canvas(canvas, ctxEventHandler);
+//////////////////$: canvas.frames.current, update_canvas(canvas, ctxEventHandler);
+// TODO use new format
 
 
 

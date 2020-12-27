@@ -16,6 +16,10 @@ fs.writeFileSync('./dist/uPlot.min.css', minicss);
 import buble from '@rollup/plugin-buble';
 import { terser } from 'rollup-plugin-terser';
 
+if ('UPLOT_DEBUG' in process.env) {
+	console.info('note: creating a debug-build of uPlot');
+}
+
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 const ver = "v" + pkg.version;
 const urlVer = "https://github.com/leeoniya/uPlot (" + ver + ")";

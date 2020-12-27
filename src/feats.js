@@ -11,3 +11,5 @@ export const FEAT_PATHS_STEPPED = true;
 export const FEAT_PATHS_BARS    = true;
 
 export const FEAT_JOIN          = true;
+
+export const FEAT_DEBUG         = ('UPLOT_DEBUG' in process.env);

@@ -12,6 +12,8 @@ import {
 	FEAT_PATHS_BARS,
 
 	FEAT_JOIN,
+
+	FEAT_DEBUG,
 } from './feats';
 
 import {
@@ -180,6 +182,10 @@ import { addGap, clipGaps, moveToH, moveToV, arcToH, arcToV, clipBand } from './
 
 function log(name, args) {
 	console.log.apply(console, [name].concat(Array.prototype.slice.call(args)));
+}
+
+if (FEAT_DEBUG) {
+	console.info('this is a debug build of uPlot. recommended for development only');
 }
 
 const linearPath = FEAT_PATHS && FEAT_PATHS_LINEAR ? linear() : null;
@@ -1022,6 +1028,12 @@ export default function uPlot(opts, data, then) {
 
 					s.min = data0[i0];
 					s.max = data0[i1];
+
+					if (FEAT_DEBUG) {
+						if (s.min == NaN || s.max == NaN) {
+							console.warn(`series ${i}: min or max is NaN, must be number or null`);
+						}
+					}
 				}
 				else if (s.show && s.auto && wsc.auto(self, viaAutoScaleX) && (psc == null || psc.min == null)) {
 					// only run getMinMax() for invalidated series data, else reuse
@@ -1030,6 +1042,12 @@ export default function uPlot(opts, data, then) {
 					// initial min/max
 					wsc.min = min(wsc.min, s.min = minMax[0]);
 					wsc.max = max(wsc.max, s.max = minMax[1]);
+
+					if (FEAT_DEBUG) {
+						if (wsc.min == NaN || wsc.max == NaN) {
+							console.warn(`series ${i}: min or max is NaN, must be number or null`);
+						}
+					}
 				}
 
 				s.idxs[0] = i0;

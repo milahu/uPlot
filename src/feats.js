@@ -12,4 +12,10 @@ export const FEAT_PATHS_BARS    = true;
 
 export const FEAT_JOIN          = true;
 
-export const FEAT_DEBUG         = ('UPLOT_DEBUG' in process.env);
+const getenv_uplot_debug = () => (
+	typeof window == 'object'
+		? !!window.UPLOT_DEBUG
+		: !!process.env.UPLOT_DEBUG
+);
+
+export const FEAT_DEBUG         = getenv_uplot_debug();

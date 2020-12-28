@@ -7,6 +7,7 @@
   "typings": "./dist/uPlot.d.ts",
   "scripts": {
     "build": "rollup -c",
+    "git-alias-diff2": "git config alias.diff2 \"diff -- :/ ':(exclude,top)dist/*'\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

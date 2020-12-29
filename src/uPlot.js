@@ -185,7 +185,7 @@ function log(name, args) {
 }
 
 if (FEAT_DEBUG) {
-	console.info('this is a debug build of uPlot. recommended for development only');
+	console.info('uPlot is in debug mode. recommended only for development');
 }
 
 const linearPath = FEAT_PATHS && FEAT_PATHS_LINEAR ? linear() : null;

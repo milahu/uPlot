@@ -116,7 +116,7 @@ export default [
 		plugins: [
 			bannerlessESM(),
 			replace({
-				'= getenv_uplot_debug();': '= false;', // src/feats.js
+				'do_debug(opts)': 'false', // src/uPlot.js
 				delimiters: ['', ''],
 			}),
 			buble({transforms: { forOf: false }}),

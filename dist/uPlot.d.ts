@@ -296,6 +296,12 @@ export interface Options {
 	hooks?: Hooks.Arrays;
 
 	plugins?: Plugin[];
+
+	debug?: Debug;
+}
+
+export interface Debug {
+	enable: boolean;
 }
 
 export interface Focus {

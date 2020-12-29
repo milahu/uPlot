@@ -12,8 +12,6 @@ import {
 	FEAT_PATHS_BARS,
 
 	FEAT_JOIN,
-
-	FEAT_DEBUG,
 } from './feats';
 
 import {
@@ -184,8 +182,9 @@ function log(name, args) {
 	console.log.apply(console, [name].concat(Array.prototype.slice.call(args)));
 }
 
-if (FEAT_DEBUG) {
-	console.info('uPlot is in debug mode. recommended only for development');
+// use parameter `_opts` to avoid false replace by @rollup/plugin-replace
+function do_debug(_opts) {
+	return _opts && _opts.debug && _opts.debug.enable;
 }
 
 const linearPath = FEAT_PATHS && FEAT_PATHS_LINEAR ? linear() : null;
@@ -245,6 +244,10 @@ function pxRatioFont(font) {
 
 export default function uPlot(opts, data, then) {
 	const self = {};
+
+	if (do_debug(opts)) {
+		console.warn('uPlot is in debug mode. recommended only for development');
+	}
 
 	function getValPct(val, scale) {
 		return (
@@ -1029,7 +1032,7 @@ export default function uPlot(opts, data, then) {
 					s.min = data0[i0];
 					s.max = data0[i1];
 
-					if (FEAT_DEBUG) {
+					if (do_debug(opts)) {
 						if (s.min == NaN || s.max == NaN) {
 							console.warn(`series ${i}: min or max is NaN, must be number or null`);
 						}
@@ -1043,7 +1046,7 @@ export default function uPlot(opts, data, then) {
 					wsc.min = min(wsc.min, s.min = minMax[0]);
 					wsc.max = max(wsc.max, s.max = minMax[1]);
 
-					if (FEAT_DEBUG) {
+					if (do_debug(opts)) {
 						if (wsc.min == NaN || wsc.max == NaN) {
 							console.warn(`series ${i}: min or max is NaN, must be number or null`);
 						}
@@ -1401,8 +1404,12 @@ export default function uPlot(opts, data, then) {
 
 			let [_incr, _space] = getIncrSpace(i, min, max, ori == 0 ? plotWidCss : plotHgtCss);
 
-			if (_space == 0)
+			if (_space == 0) {
+				if (do_debug(opts)) {
+					console.error(`error. data for axis ${i} exceed maximum precision`);
+				}
 				return;
+			}
 
 			// if we're using index positions, force first tick to match passed index
 			let forceMin = scale.distr == 2;
